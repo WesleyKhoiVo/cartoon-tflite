@@ -11,46 +11,26 @@ import androidx.navigation.fragment.findNavController
 import com.mzm.sample.cartoongan.R
 
 /**
- * A simple [Fragment] subclass that handles camera permission request
+ * A simple subclass that handles camera permission request
  */
 class PermissionsFragment : Fragment() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (allPermissionsGranted(
-                requireContext()
-            )
-        ) {
+        if (allPermissionsGranted(requireContext())) {
             findNavController().navigate(R.id.action_permissions_to_camera)
         } else {
-            requestPermissions(
-                REQUIRED_PERMISSIONS,
-                REQUEST_CODE_PERMISSIONS
-            )
+            requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
     }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted(
-                    requireContext()
-                )
-            ) {
+            if (allPermissionsGranted(requireContext())) {
                 findNavController().navigate(R.id.action_permissions_to_camera)
             } else {
-                Toast.makeText(
-                    context,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context,"Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)

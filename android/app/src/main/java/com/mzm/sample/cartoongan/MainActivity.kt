@@ -9,8 +9,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 /**
- * Author: Margaret Maynard-Reid
- *
  * This is an Android sample app that showcases the following:
  *
  * 1. Jetpack navigation component - navigate between Fragments
@@ -26,27 +24,22 @@ import java.io.File
  * 3. Selfie2CartoonFragment.kt - display the selfie & cartoon images
  */
 class MainActivity : AppCompatActivity() {
-
     private lateinit var container: FrameLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
     }
-
     companion object {
-
-        /** Use external media if it is available, our app's file directory otherwise */
+        // Use external media if it is available, our app's file directory otherwise
         fun getOutputDirectory(context: Context): File {
             val appContext = context.applicationContext
-            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() } }
-            return if (mediaDir != null && mediaDir.exists())
-                mediaDir else appContext.filesDir
+            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }}
+            return when(mediaDir != null && mediaDir.exists()) {
+                true -> mediaDir
+                false -> appContext.filesDir
+            }
         }
     }
 }

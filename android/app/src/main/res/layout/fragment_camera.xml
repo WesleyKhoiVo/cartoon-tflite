@@ -47,14 +47,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-
-        <Spinner
-            android:id="@+id/model_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:entries="@array/tflite_models"
-            android:prompt="@string/tflite_model" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

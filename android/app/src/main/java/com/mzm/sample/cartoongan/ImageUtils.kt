@@ -7,11 +7,8 @@ import java.io.IOException
 import java.io.OutputStream
 
 class ImageUtils {
-
     companion object {
-
         fun saveBitmap(bitmap: Bitmap?, file: File): String {
-
             try {
                 val stream: OutputStream = FileOutputStream(file)
                 bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
@@ -20,10 +17,7 @@ class ImageUtils {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
             return file.absolutePath
-
         }
     }
-
 }
