@@ -21,11 +21,10 @@
 		78FBA32B255CA6E0003EC30F /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA32A255CA6E0003EC30F /* ImagePickerController.swift */; };
 		78FBA337255CABB4003EC30F /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA336255CABB4003EC30F /* SwiftyBeaver.swift */; };
 		78FBA33F255CD164003EC30F /* CartoonGanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA33E255CD164003EC30F /* CartoonGanModel.swift */; };
-		78FBA343255D7BCB003EC30F /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA342255D7BCB003EC30F /* UIImage+Symbols.swift */; };
-		78FBA359255D9644003EC30F /* ErrorDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA358255D9644003EC30F /* ErrorDialog.swift */; };
+		78FBA343255D7BCB003EC30F /* UIImageSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA342255D7BCB003EC30F /* UIImageSymbols.swift */; };
 		78FBA35E255DAC40003EC30F /* PopUpDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA35D255DAC40003EC30F /* PopUpDialog.swift */; };
-		78FBA37C255DF803003EC30F /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA37B255DF803003EC30F /* UIView+Utils.swift */; };
-		78FBA37F255E0091003EC30F /* Data+Array+Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA37E255E0091003EC30F /* Data+Array+Convert.swift */; };
+		78FBA37C255DF803003EC30F /* UIViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA37B255DF803003EC30F /* UIViewUtils.swift */; };
+		78FBA37F255E0091003EC30F /* DataArrayConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBA37E255E0091003EC30F /* DataArrayConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,11 +45,10 @@
 		78FBA32A255CA6E0003EC30F /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		78FBA336255CABB4003EC30F /* SwiftyBeaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaver.swift; sourceTree = "<group>"; };
 		78FBA33E255CD164003EC30F /* CartoonGanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonGanModel.swift; sourceTree = "<group>"; };
-		78FBA342255D7BCB003EC30F /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
-		78FBA358255D9644003EC30F /* ErrorDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDialog.swift; sourceTree = "<group>"; };
+		78FBA342255D7BCB003EC30F /* UIImageSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageSymbols.swift; sourceTree = "<group>"; };
 		78FBA35D255DAC40003EC30F /* PopUpDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpDialog.swift; sourceTree = "<group>"; };
-		78FBA37B255DF803003EC30F /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
-		78FBA37E255E0091003EC30F /* Data+Array+Convert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Array+Convert.swift"; sourceTree = "<group>"; };
+		78FBA37B255DF803003EC30F /* UIViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewUtils.swift; sourceTree = "<group>"; };
+		78FBA37E255E0091003EC30F /* DataArrayConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataArrayConverter.swift; sourceTree = "<group>"; };
 		7E0A134D38AA464EE8482A45 /* Pods_CartoonGan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CartoonGan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -95,7 +93,6 @@
 		7814D049255C9DDA009D4571 /* CartoonGan */ = {
 			isa = PBXGroup;
 			children = (
-				78FBA357255D963B003EC30F /* Dialog */,
 				78FBA341255D7BBB003EC30F /* Extensions */,
 				78FBA33D255CD13B003EC30F /* CartoonGanModel */,
 				78FBA335255CABA5003EC30F /* Setup */,
@@ -158,8 +155,8 @@
 		78FBA325255CA3D7003EC30F /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				78FBA342255D7BCB003EC30F /* UIImage+Symbols.swift */,
-				78FBA37B255DF803003EC30F /* UIView+Utils.swift */,
+				78FBA342255D7BCB003EC30F /* UIImageSymbols.swift */,
+				78FBA37B255DF803003EC30F /* UIViewUtils.swift */,
 				78FBA326255CA3E2003EC30F /* Fonts.swift */,
 			);
 			path = UI;
@@ -185,17 +182,9 @@
 		78FBA341255D7BBB003EC30F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				78FBA37E255E0091003EC30F /* Data+Array+Convert.swift */,
+				78FBA37E255E0091003EC30F /* DataArrayConverter.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		78FBA357255D963B003EC30F /* Dialog */ = {
-			isa = PBXGroup;
-			children = (
-				78FBA358255D9644003EC30F /* ErrorDialog.swift */,
-			);
-			path = Dialog;
 			sourceTree = "<group>";
 		};
 		A2AD24FD8CA4BE6E5485C354 /* Pods */ = {
@@ -322,10 +311,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78FBA37C255DF803003EC30F /* UIView+Utils.swift in Sources */,
+				78FBA37C255DF803003EC30F /* UIViewUtils.swift in Sources */,
 				78FBA32B255CA6E0003EC30F /* ImagePickerController.swift in Sources */,
 				78FBA337255CABB4003EC30F /* SwiftyBeaver.swift in Sources */,
-				78FBA359255D9644003EC30F /* ErrorDialog.swift in Sources */,
 				7814D076255CA100009D4571 /* MainView.swift in Sources */,
 				78FBA327255CA3E2003EC30F /* Fonts.swift in Sources */,
 				7814D04B255C9DDA009D4571 /* AppDelegate.swift in Sources */,
@@ -333,9 +321,9 @@
 				78FBA33F255CD164003EC30F /* CartoonGanModel.swift in Sources */,
 				78FBA35E255DAC40003EC30F /* PopUpDialog.swift in Sources */,
 				7814D067255C9FDB009D4571 /* ViewController.swift in Sources */,
-				78FBA37F255E0091003EC30F /* Data+Array+Convert.swift in Sources */,
+				78FBA37F255E0091003EC30F /* DataArrayConverter.swift in Sources */,
 				7814D04D255C9DDA009D4571 /* SceneDelegate.swift in Sources */,
-				78FBA343255D7BCB003EC30F /* UIImage+Symbols.swift in Sources */,
+				78FBA343255D7BCB003EC30F /* UIImageSymbols.swift in Sources */,
 				780CE62B2561D1A60008DF1A /* CartoonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

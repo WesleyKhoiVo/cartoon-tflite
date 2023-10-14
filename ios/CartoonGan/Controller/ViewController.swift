@@ -25,9 +25,6 @@ final class ViewController: UIViewController {
     private lazy var spinner = UIActivityIndicatorView(style: .large)
     private lazy var mainView = MainView()
     private var cameraButton: UIButton { mainView.cameraButton }
-    //private var galleryButton: UIButton { mainView.galleryButton }
-    
-    // MARK: - View Lifecycle
     
     override func loadView() {
         self.view = mainView
@@ -37,16 +34,7 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         setupSpinner()
 
-        cameraButton.addTarget(
-            self,
-            action: #selector(cameraButtonTapped),
-            for: .touchUpInside
-        )
-        // galleryButton.addTarget(
-        //     self,
-        //     action: #selector(galleryButtonTapped),
-        //     for: .touchUpInside
-        // )
+        cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -57,23 +45,12 @@ final class ViewController: UIViewController {
         enabled = false
     }
 
-    // MARK: - Private Methods
-
     @objc private func cameraButtonTapped() {
         imagePickerController.cameraAccessRequest()
     }
     
-    // @objc private func galleryButtonTapped() {
-    //     imagePickerController.photoGalleryAccessRequest()
-    // }
-    
     private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
         imagePickerController.present(parent: self, sourceType: sourceType)
-    }
-
-    private func showErrorDialog(message: String) {
-        let errorDialog = ErrorDialog(message: message)
-        errorDialog.present(self)
     }
 
     private func setupSpinner() {
@@ -82,13 +59,11 @@ final class ViewController: UIViewController {
     }
 }
 
-// MARK: - ImagePickerControllerDelegate
-
 extension ViewController: ImagePickerControllerDelegate {
     func imagePicker(_ imagePicker: ImagePickerController, canUseCamera allowed: Bool) {
-        guard allowed else {
+        guard allowed
+        else {
             log.error("Camera access request failed!")
-            showErrorDialog(message: "We don't have access to your camera")
             return
         }
 
@@ -96,9 +71,9 @@ extension ViewController: ImagePickerControllerDelegate {
     }
     
     func imagePicker(_ imagePicker: ImagePickerController, canUseGallery allowed: Bool) {
-        guard allowed else {
+        guard allowed
+        else {
             log.error("Gallery access request failed!")
-            showErrorDialog(message: "We don't have access to your gallery")
             return
         }
 
@@ -119,12 +94,9 @@ extension ViewController: ImagePickerControllerDelegate {
     func imagePicker(_ imagePicker: ImagePickerController, didFail failed: Bool) {
         if failed {
             imagePicker.dismiss()
-            showErrorDialog(message: "We're having some issues to load your image!")
         }
     }
 }
-
-// MARK: - CartoonGanModelDelegate
 
 extension ViewController: CartoonGanModelDelegate {
     func model(_ model: CartoonGanModel, didFinishProcessing image: UIImage) {
@@ -139,19 +111,14 @@ extension ViewController: CartoonGanModelDelegate {
     func model(_ model: CartoonGanModel, didFailedProcessing error: CartoonGanModelError) {
         DispatchQueue.main.async {
             SwiftSpinner.hide()
-            self.showErrorDialog(message: error.localizedDescription)
         }
     }
 
     func model(_ model: CartoonGanModel, didFinishAllocation error: CartoonGanModelError?) {
         DispatchQueue.main.async {
             SwiftSpinner.hide()
-            guard let error = error else {
-                self.enabled = true
-                return
-            }
-
-            self.showErrorDialog(message: error.localizedDescription)
+            self.enabled = true
+            return
         }
     }
 }

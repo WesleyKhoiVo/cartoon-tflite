@@ -2,14 +2,10 @@ import PopupDialog
 
 extension PopupDialog {
 
-    // MARK: - Constants
-
     private struct Constants {
         static let borderWidth: CGFloat = 3
         static let cornerRadius: Float = 32
     }
-
-    // MARK: - Methods
 
     static func setup() {
         PopupDialogContainerView.appearance().cornerRadius = Constants.cornerRadius

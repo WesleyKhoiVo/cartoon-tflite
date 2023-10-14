@@ -2,8 +2,6 @@ import UIKit
 
 final class CartoonView: UIView {
 
-    // MARK: - Subviews
-
     lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -24,8 +22,6 @@ final class CartoonView: UIView {
         return button
     }()
 
-    // MARK: - Constants
-
     private struct Constants {
         struct Button {
             static let size: CGFloat = 60
@@ -33,17 +29,11 @@ final class CartoonView: UIView {
         }
     }
 
-    // MARK: - Initializer
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
 
-        addSubviews(
-            imageView,
-            backButton,
-            shareButton
-        )
+        addSubviews(imageView, backButton, shareButton)
 
         setupConstraints()
     }
@@ -51,8 +41,6 @@ final class CartoonView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Private methods
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([

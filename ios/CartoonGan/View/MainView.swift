@@ -1,9 +1,6 @@
 import UIKit
 
 final class MainView: UIView {
-    
-    // MARK: - Subviews
-    
     lazy var cameraButton: UIButton = {
         let button = UIButton()
         button.setImage(.camera, for: .normal)
@@ -15,18 +12,6 @@ final class MainView: UIView {
         button.tintColor = .white;
         return button
     }()
-    
-    // lazy var galleryButton: UIButton = {
-    //     let button = UIButton()
-    //     button.setImage(.photo, for: .normal)
-    //     button.titleLabel?.font = Font.paragraph
-    //     button.layer.cornerRadius = Constants.Button.cornerRadius
-    //     button.layer.borderColor = UIColor.white.cgColor
-    //     button.layer.borderWidth = Constants.Button.borderWidth
-    //     button.backgroundColor = .black
-    //     button.tintColor = .white
-    //     return button
-    // }()
 
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -47,8 +32,6 @@ final class MainView: UIView {
         label.textAlignment = .center
         return label
     }()
-
-    // MARK: - Constants
     
     private struct Constants {
         struct Button {
@@ -63,28 +46,18 @@ final class MainView: UIView {
         }
     }
     
-    // MARK: - Initializers
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
 
-        addSubviews(
-            titleLabel,
-            subtitleLabel,
-            //galleryButton,
-            cameraButton
-        )
-
+        addSubviews(titleLabel, subtitleLabel, cameraButton)
         setupConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Methods
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Constants.Title.topSpacing),
@@ -95,11 +68,6 @@ final class MainView: UIView {
             subtitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Title.sideSpacing),
             subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.Title.sideSpacing),
-
-            // galleryButton.heightAnchor.constraint(equalToConstant: Constants.Button.size),
-            // galleryButton.widthAnchor.constraint(equalToConstant: Constants.Button.size),
-            // galleryButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Button.spacing),
-            // galleryButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.Button.spacing),
             
             cameraButton.heightAnchor.constraint(equalToConstant: Constants.Button.size),
             cameraButton.widthAnchor.constraint(equalToConstant: Constants.Button.size),

@@ -16,7 +16,6 @@ protocol CartoonGanModelDelegate: NSObject {
 }
 
 final class CartoonGanModel {
-    
     weak var delegate: CartoonGanModelDelegate?
     private var interpreter: Interpreter?
     private let queue = DispatchQueue(label: Constants.Queue.label)
@@ -60,10 +59,8 @@ final class CartoonGanModel {
 
     func start(name: String, ext: String) {
         queue.async {
-            guard let modelPath = Bundle.main.path(
-                forResource: name,
-                ofType: ext
-            ) else {
+            guard let modelPath = Bundle.main.path(forResource: name, ofType: ext)
+            else {
                 log.error("Could not find model file: \(name).\(ext)")
                 self.delegate?.model(self, didFinishAllocation: .allocation)
                 return
@@ -83,15 +80,13 @@ final class CartoonGanModel {
     }
 
     func start() {
-        start(
-            name: Constants.File.name,
-            ext: Constants.File.ext
-        )
+        start(name: Constants.File.name, ext: Constants.File.ext)
     }
 
     func process(_ image: UIImage) {
         // check interpreter
-        guard let interpreter = interpreter else {
+        guard let interpreter = interpreter
+        else {
             log.error("Interpreter not available")
             delegate?.model(self, didFailedProcessing: .allocation)
             return
@@ -105,19 +100,17 @@ final class CartoonGanModel {
         }
 
         queue.async {
-            // 🛠 preprocess
-            log.debug("Start pre-processing 🛠")
-            guard let inputData = self.preprocess(
-                cgImage,
-                orientation: image.imageOrientation
-            ) else {
+            // preprocess
+            log.debug("Start pre-processing")
+            guard let inputData = self.preprocess(cgImage, orientation: image.imageOrientation)
+            else {
                 log.error("Preprocessing failed!")
                 self.delegate?.model(self, didFailedProcessing: .preprocess)
                 return
             }
 
-            // 🚀 pass through the model
-            log.debug("Invoke interpreter 🚀")
+            // pass through the model
+            log.debug("Invoke interpreter")
             do {
                 try interpreter.copy(inputData, toInputAt: 0)
                 try interpreter.invoke()
@@ -127,11 +120,10 @@ final class CartoonGanModel {
                 return
             }
 
-            // 🍉 post process
-            log.debug("Start post-processing 🍉")
-            guard
-                let outputTensor = try? interpreter.output(at: 0),
-                let output = self.postprocess(data: outputTensor.data, to: image.size)
+            // post process
+            log.debug("Start post-processing")
+            guard let outputTensor = try? interpreter.output(at: 0),
+                  let output = self.postprocess(data: outputTensor.data, to: image.size)
             else {
                 log.error("Could not retrieve output image")
                 self.delegate?.model(self, didFailedProcessing: .postprocess)
@@ -143,48 +135,47 @@ final class CartoonGanModel {
         }
     }
 
-    private func preprocess(
-        _ image: CGImage,
-        width: Int = Constants.Units.Common.width,
-        height: Int = Constants.Units.Common.height,
-        orientation: UIImage.Orientation
-    ) -> Data? {
+    private func preprocess(_ image: CGImage,
+                            width: Int = Constants.Units.Common.width,
+                            height: Int = Constants.Units.Common.height,
+                            orientation: UIImage.Orientation) -> Data? {
         // init buffer
-        guard let base = malloc(Constants.Units.ARGB.bytesCount) else { return nil }
+        guard let base = malloc(Constants.Units.ARGB.bytesCount)
+        else {
+            return nil
+        }
         defer { free(base) }
 
-        // create context with buffer 🥽
-        guard let context = CGContext(
-            data: base,
-            width: width,
-            height: height,
-            bitsPerComponent: Constants.Units.ARGB.bitsPerComponent,
-            bytesPerRow: Constants.Units.ARGB.bytesPerRow,
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue
-        ) else { return nil }
+        // create context with buffer
+        guard let context = CGContext(data: base,
+                                      width: width,
+                                      height: height,
+                                      bitsPerComponent: Constants.Units.ARGB.bitsPerComponent,
+                                      bytesPerRow: Constants.Units.ARGB.bytesPerRow,
+                                      space: CGColorSpaceCreateDeviceRGB(),
+                                      bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)
+        else {
+            return nil
+        }
 
         // fix orientation
-        context.concatenate(
-            createUpTransformation(
-                orientation,
-                size: Constants.Units.Common.size
-            )
-        )
+        context.concatenate(createUpTransformation(orientation, size: Constants.Units.Common.size))
 
         // draw image in context ✍️
         context.draw(image, in: CGRect(origin: .zero, size: Constants.Units.Common.size))
 
         // parse byte data! 👓
-        guard let bytes = Array<UInt8>(unsafeData: Data(
-            bytes: base,
-            count: Constants.Units.ARGB.bytesCount
-        )) else { return nil }
+        guard let bytes = Array<UInt8>(unsafeData: Data(bytes: base, count: Constants.Units.ARGB.bytesCount))
+        else {
+            return nil
+        }
 
         // normalize, remove alpha and convert to float in a single step!
         var normalized = [Float32]()
         for i in 1 ..< Constants.Units.ARGB.bytesCount {
-            if i % 4 == 0 { continue } // ignore first alpha channel
+            if i % 4 == 0 {
+                continue
+            } // ignore first alpha channel
             normalized.append(normalize(bytes[i]))
         }
 
@@ -192,12 +183,10 @@ final class CartoonGanModel {
         return Data(copyingBufferOf: normalized)
     }
 
-    private func postprocess(
-        data: Data,
-        width: Int = Constants.Units.Common.width,
-        height: Int = Constants.Units.Common.height,
-        to originalSize: CGSize
-    ) -> UIImage? {
+    private func postprocess(data: Data,
+                             width: Int = Constants.Units.Common.width,
+                             height: Int = Constants.Units.Common.height,
+                             to originalSize: CGSize) -> UIImage? {
         // read output as float array
         let output = data.toArray(type: Float32.self)
 
@@ -220,30 +209,27 @@ final class CartoonGanModel {
         }
 
         // construct image with data
-        guard
-            let dataProvider = CGDataProvider(data: Data(buffer: buffer) as CFData),
-            let cgImage = CGImage(
-                width: width,
-                height: height,
-                bitsPerComponent: Constants.Units.ARGB.bitsPerComponent,
-                bitsPerPixel: Constants.Units.ARGB.bitsPerPixel,
-                bytesPerRow: Constants.Units.ARGB.bytesPerRow,
-                space: CGColorSpaceCreateDeviceRGB(),
-                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue),
-                provider: dataProvider,
-                decode: nil,
-                shouldInterpolate: false,
-                intent: .defaultIntent
-            )
+        guard let dataProvider = CGDataProvider(data: Data(buffer: buffer) as CFData),
+              let cgImage = CGImage(width: width,
+                                    height: height,
+                                    bitsPerComponent: Constants.Units.ARGB.bitsPerComponent,
+                                    bitsPerPixel: Constants.Units.ARGB.bitsPerPixel,
+                                    bytesPerRow: Constants.Units.ARGB.bytesPerRow,
+                                    space: CGColorSpaceCreateDeviceRGB(),
+                                    bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue),
+                                    provider: dataProvider,
+                                    decode: nil,
+                                    shouldInterpolate: false,
+                                    intent: .defaultIntent)
         else {
             return nil
         }
 
         // keep original size
-        guard let resizedImage = resize(
-            cgImage,
-            to: originalSize
-        ) else { return nil }
+        guard let resizedImage = resize(cgImage, to: originalSize)
+        else {
+            return nil
+        }
 
         // extract resulting image from context
         return UIImage(cgImage: resizedImage)
@@ -258,12 +244,11 @@ final class CartoonGanModel {
         (Float32(pixel) - Constants.Units.Input.mean) / Constants.Units.Input.std // normalize
     }
 
-    private func createUpTransformation(
-        _ orientation: UIImage.Orientation,
-        size: CGSize
-    ) -> CGAffineTransform {
+    private func createUpTransformation(_ orientation: UIImage.Orientation, size: CGSize) -> CGAffineTransform {
         var transform = CGAffineTransform.identity
-        if case .up = orientation { return transform }
+        if case .up = orientation {
+            return transform
+        }
 
         switch orientation {
         case .down, .downMirrored:
@@ -282,32 +267,24 @@ final class CartoonGanModel {
             break
         }
 
-        switch orientation {
-        case .upMirrored, .downMirrored:
-            transform.translatedBy(x: size.width, y: 0)
-            transform.scaledBy(x: -1, y: 1)
-            break
-        case .leftMirrored, .rightMirrored:
-            transform.translatedBy(x: size.height, y: 0)
-            transform.scaledBy(x: -1, y: 1)
-        default:
-            break
-        }
-
         return transform
     }
 
     private func resize(_ image: CGImage, to size: CGSize) -> CGImage? {
-        guard let colorSpace = image.colorSpace else { return nil }
-        guard let context = CGContext(
-            data: nil,
-            width: Int(size.width),
-            height: Int(size.height),
-            bitsPerComponent: image.bitsPerComponent,
-            bytesPerRow: Int(size.width) * image.bitsPerComponent * 4,
-            space: colorSpace,
-            bitmapInfo: image.alphaInfo.rawValue
-        ) else { return nil }
+        guard let colorSpace = image.colorSpace
+        else {
+            return nil
+        }
+        guard let context = CGContext(data: nil,
+                                      width: Int(size.width),
+                                      height: Int(size.height),
+                                      bitsPerComponent: image.bitsPerComponent,
+                                      bytesPerRow: Int(size.width) * image.bitsPerComponent * 4,
+                                      space: colorSpace,
+                                      bitmapInfo: image.alphaInfo.rawValue)
+        else {
+            return nil
+        }
         context.interpolationQuality = .high
         context.draw(image, in: CGRect(origin: .zero, size: size))
         return context.makeImage()

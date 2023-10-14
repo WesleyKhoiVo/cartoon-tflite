@@ -5,10 +5,7 @@ final class CartoonViewController: UIViewController {
     private let cartoonImage: UIImage
 
     private lazy var shareViewController: UIViewController = {
-        let shareViewController = UIActivityViewController(
-            activityItems: [cartoonImage],
-            applicationActivities: nil
-        )
+        let shareViewController = UIActivityViewController(activityItems: [cartoonImage], applicationActivities: nil)
 
         shareViewController.popoverPresentationController?.sourceView = view
         return shareViewController
@@ -35,17 +32,9 @@ final class CartoonViewController: UIViewController {
         super.viewDidLoad()
         cartoonView.imageView.image = cartoonImage
 
-        backButton.addTarget(
-            self,
-            action: #selector(onBackButton),
-            for: .touchUpInside
-        )
+        backButton.addTarget(self, action: #selector(onBackButton), for: .touchUpInside)
 
-        shareButton.addTarget(
-            self,
-            action: #selector(onShareButton),
-            for: .touchUpInside
-        )
+        shareButton.addTarget(self, action: #selector(onShareButton), for: .touchUpInside)
     }
 
     @objc func onBackButton() {

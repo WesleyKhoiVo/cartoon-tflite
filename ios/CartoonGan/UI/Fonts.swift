@@ -1,9 +1,7 @@
 import UIKit
 
 struct Font {
-    
-    // MARK: - Fonts
-    
+
     static var title: UIFont { with(size: .extraLarge) }
     
     static var subtitle: UIFont { with(size: .medium) }
@@ -11,8 +9,6 @@ struct Font {
     static var paragraph: UIFont { with(size: .small) }
 
     static var small: UIFont { with(size: .extraSmall) }
-        
-    // MARK: - Size
     
     enum Size: CGFloat {
         case extraLarge = 80.0
@@ -23,19 +19,12 @@ struct Font {
         case mini = 12.0
     }
     
-    // MARK: - Constants
-    
     private struct Constants {
         static let name = "AvenirNext-Heavy"
     }
     
-    // MARK: - Methods
-    
     static func with(size: Size) -> UIFont {
-        return UIFont(
-            name: Constants.name,
-            size: size.rawValue
-        ) ?? UIFont.systemFont(ofSize: size.rawValue)
+        return UIFont(name: Constants.name, size: size.rawValue) ?? UIFont.systemFont(ofSize: size.rawValue)
     }
     
 }
