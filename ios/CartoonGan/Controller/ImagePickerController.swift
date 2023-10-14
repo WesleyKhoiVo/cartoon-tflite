@@ -5,7 +5,6 @@ import UIKit
 
 protocol ImagePickerControllerDelegate: AnyObject {
     func imagePicker(_ imagePicker: ImagePickerController, canUseCamera allowed: Bool)
-    func imagePicker(_ imagePicker: ImagePickerController, canUseGallery allowed: Bool)
     func imagePicker(_ imagePicker: ImagePickerController, didSelect image: UIImage)
     func imagePicker(_ imagePicker: ImagePickerController, didCancel cancel: Bool)
     func imagePicker(_ imagePicker: ImagePickerController, didFail failed: Bool)

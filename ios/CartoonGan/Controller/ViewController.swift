@@ -17,7 +17,6 @@ final class ViewController: UIViewController {
 
     private var enabled: Bool = false {
         didSet {
-            //galleryButton.isEnabled = enabled
             cameraButton.isEnabled = enabled
         }
     }
@@ -55,7 +54,6 @@ final class ViewController: UIViewController {
 
     private func setupSpinner() {
         SwiftSpinner.useContainerView(view)
-        SwiftSpinner.setTitleFont(Font.paragraph)
     }
 }
 
@@ -68,16 +66,6 @@ extension ViewController: ImagePickerControllerDelegate {
         }
 
         presentImagePicker(sourceType: .camera)
-    }
-    
-    func imagePicker(_ imagePicker: ImagePickerController, canUseGallery allowed: Bool) {
-        guard allowed
-        else {
-            log.error("Gallery access request failed!")
-            return
-        }
-
-        presentImagePicker(sourceType: .photoLibrary)
     }
     
     func imagePicker(_ imagePicker: ImagePickerController, didSelect image: UIImage) {

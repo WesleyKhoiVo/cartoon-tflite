@@ -20,7 +20,7 @@ struct Font {
     }
     
     private struct Constants {
-        static let name = "AvenirNext-Heavy"
+        static let name = "SF Pro"
     }
     
     static func with(size: Size) -> UIFont {

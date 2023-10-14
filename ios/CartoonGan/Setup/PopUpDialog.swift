@@ -10,7 +10,6 @@ extension PopupDialog {
     static func setup() {
         PopupDialogContainerView.appearance().cornerRadius = Constants.cornerRadius
         PopupDialogDefaultView.appearance().backgroundColor = .darkGray
-        PopupDialogDefaultView.appearance().titleFont = Font.subtitle
         PopupDialogDefaultView.appearance().titleColor = .white
         PopupDialogDefaultView.appearance().messageFont = Font.small
         PopupDialogDefaultView.appearance().messageColor = .white

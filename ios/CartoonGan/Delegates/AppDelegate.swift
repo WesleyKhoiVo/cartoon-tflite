@@ -15,9 +15,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationC
         
         // configure logger
         SwiftyBeaver.setup()
-
-        // configure pop up dialogs
-        // PopupDialog.setup()
         
         return true
     }
@@ -30,8 +27,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationC
     }
 
     @available(iOS 13.0, *)
-    func application(
-        _ application: UIApplication,
-        didDiscardSceneSessions sceneSessions: Set<UISceneSession>
-    ) {}
+    func application(_ application: UIApplication,
+                     didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+    }
 }
